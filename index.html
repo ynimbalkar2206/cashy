@@ -5,78 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MineCashy</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://sdk.cashfree.com/js/ui/2.0.0/dropin.min.js"></script>
   <style>
-    body {
-      background-color: #020617;
-      font-family: 'Segoe UI', sans-serif;
-    }
-
+    body { background-color: #020617; font-family: 'Segoe UI', sans-serif; }
     .orb-container {
       position: relative;
-      width: 8rem;
-      height: 8rem;
-      border-radius: 50%;
+      width: 8rem; height: 8rem; border-radius: 50%;
       background: radial-gradient(circle, #0e7490, #06b6d4);
       box-shadow: 0 0 25px #22d3ee, 0 0 60px #22d3ee inset;
       animation: pulse 2s infinite ease-in-out;
     }
-
     .orb-icon {
-      position: absolute;
-      top: 50%;
-      left: 50%;
+      position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 2.5rem;
-      color: #000;
-      font-weight: bold;
-      z-index: 10;
+      font-size: 2.5rem; color: #000; font-weight: bold;
     }
-
     .ring {
-      position: absolute;
-      border: 2px dotted #22d3ee;
-      border-radius: 50%;
-      animation: spin 8s linear infinite;
+      position: absolute; border: 2px dotted #22d3ee;
+      border-radius: 50%; animation: spin 8s linear infinite;
     }
-
-    .ring1 {
-      width: 10rem;
-      height: 10rem;
-    }
-
-    .ring2 {
-      width: 12rem;
-      height: 12rem;
-      animation-duration: 12s;
-    }
-
+    .ring1 { width: 10rem; height: 10rem; }
+    .ring2 { width: 12rem; height: 12rem; animation-duration: 12s; }
     @keyframes spin {
       from { transform: rotate(0deg); }
       to   { transform: rotate(360deg); }
     }
-
     @keyframes pulse {
-      0%, 100% {
-        box-shadow: 0 0 25px #22d3ee, 0 0 60px #22d3ee inset;
-      }
-      50% {
-        box-shadow: 0 0 35px #22d3ee, 0 0 80px #22d3ee inset;
-      }
+      0%, 100% { box-shadow: 0 0 25px #22d3ee, 0 0 60px #22d3ee inset; }
+      50% { box-shadow: 0 0 35px #22d3ee, 0 0 80px #22d3ee inset; }
     }
   </style>
 </head>
 <body class="flex flex-col items-center text-white min-h-screen p-6">
 
-  <!-- App Title -->
   <h1 class="text-4xl font-bold text-cyan-400 mb-8 drop-shadow-lg">🔷 MineCashy</h1>
 
-  <!-- Mining Balance -->
   <div class="bg-cyan-900 text-cyan-200 px-6 py-4 rounded-xl shadow-lg mb-8 w-full max-w-md text-center">
     <h2 class="text-lg font-semibold">Mining Balance</h2>
     <p id="miningBalance" class="text-2xl font-mono mt-1">₹0.000000</p>
   </div>
 
-  <!-- Animated Orb -->
   <div class="relative mt-8 mb-12 flex items-center justify-center">
     <div class="ring ring1"></div>
     <div class="ring ring2"></div>
@@ -85,24 +53,13 @@
     </div>
   </div>
 
-  <!-- Live Mined Amount -->
-  <p id="liveAmount" class="text-3xl font-bold mb-2 text-cyan-400 font-mono tracking-widest w-[200px] text-center">
-    ₹0.000000
-  </p>
+  <p id="liveAmount" class="text-3xl font-bold mb-2 text-cyan-400 font-mono tracking-widest w-[200px] text-center">₹0.000000</p>
 
-  <!-- Speed Display -->
-  <p id="ghSpeed" class="text-lg font-semibold text-cyan-300 mb-10 tracking-wide">
-    ⚙️ Speed: 10 GH/s
-  </p>
+  <p id="ghSpeed" class="text-lg font-semibold text-cyan-300 mb-10 tracking-wide">⚙️ Speed: 10 GH/s</p>
 
-  <!-- Claim and Boost Buttons -->
   <div class="flex gap-5 mb-10">
-    <button onclick="claim()" class="border-2 border-cyan-400 text-cyan-200 px-6 py-2 rounded-lg font-semibold hover:bg-cyan-500 hover:text-black transition">
-      ✔️ Claim
-    </button>
-    <button onclick="toggleModal(true)" class="border-2 border-cyan-400 text-cyan-200 px-6 py-2 rounded-lg font-semibold hover:bg-cyan-500 hover:text-black transition">
-      ⚡ Boost
-    </button>
+    <button onclick="claim()" class="border-2 border-cyan-400 text-cyan-200 px-6 py-2 rounded-lg font-semibold hover:bg-cyan-500 hover:text-black transition">✔️ Claim</button>
+    <button onclick="toggleModal(true)" class="border-2 border-cyan-400 text-cyan-200 px-6 py-2 rounded-lg font-semibold hover:bg-cyan-500 hover:text-black transition">⚡ Boost</button>
   </div>
 
   <!-- Boost Modal -->
@@ -112,8 +69,6 @@
         <h2 class="text-xl font-bold text-white">🌟 Boost Mining Speed</h2>
         <button onclick="toggleModal(false)" class="text-gray-300 hover:text-white text-2xl">&times;</button>
       </div>
-
-      <p class="text-sm text-gray-300 mb-3">Increase power for 30 days. Admin activates after payment.</p>
 
       <label for="boostAmount" class="block text-sm text-white mb-1">Enter Base Amount (Min ₹500)</label>
       <input id="boostAmount" type="number" min="500" value="500" class="w-full mb-3 px-4 py-2 rounded bg-gray-800 text-white border border-cyan-500" />
@@ -128,40 +83,37 @@
       </div>
 
       <div class="flex gap-3">
-        <button onclick="confirmBoost()" class="flex-1 bg-pink-500 text-white py-2 rounded font-semibold hover:bg-pink-600">⚡ Proceed to Pay</button>
+        <button onclick="initiatePayment()" class="flex-1 bg-pink-500 text-white py-2 rounded font-semibold hover:bg-pink-600">⚡ Proceed to Pay</button>
         <button onclick="toggleModal(false)" class="flex-1 bg-gray-800 text-white py-2 rounded border border-gray-600">✖ Cancel</button>
       </div>
     </div>
   </div>
 
-  <!-- JavaScript -->
+  <!-- Payment Container -->
+ <div id="dropin-container" class="hidden"></div>
+
+
   <script>
     let miningBalance = 0.000000;
     let minedAmount = 0.000000;
     let ghSpeed = 10;
-    let ticksPerSecond = 20;
-
-    const liveAmountEl = document.getElementById("liveAmount");
-    const miningBalanceEl = document.getElementById("miningBalance");
-    const ghSpeedEl = document.getElementById("ghSpeed");
-
+    const ticksPerSecond = 20;
     const rupeesPerMonthPer10GH = 200;
     const ticksPerMonth = 30 * 24 * 60 * 60 * ticksPerSecond;
     const rupeesPerTickPerGH = rupeesPerMonthPer10GH / 10 / ticksPerMonth;
 
     setInterval(() => {
-      const miningSpeed = rupeesPerTickPerGH * ghSpeed;
-      minedAmount += miningSpeed;
+      minedAmount += rupeesPerTickPerGH * ghSpeed;
       minedAmount = parseFloat(minedAmount.toFixed(6));
-      liveAmountEl.textContent = "₹" + minedAmount.toFixed(6);
-      ghSpeedEl.textContent = `⚙️ Speed: ${ghSpeed.toFixed(2)} GH/s`;
+      document.getElementById("liveAmount").textContent = "₹" + minedAmount.toFixed(6);
+      document.getElementById("ghSpeed").textContent = `⚙️ Speed: ${ghSpeed.toFixed(2)} GH/s`;
     }, 50);
 
     function claim() {
       miningBalance += minedAmount;
       minedAmount = 0.000000;
-      miningBalanceEl.textContent = "₹" + miningBalance.toFixed(6);
-      liveAmountEl.textContent = "₹0.000000";
+      document.getElementById("miningBalance").textContent = "₹" + miningBalance.toFixed(6);
+      document.getElementById("liveAmount").textContent = "₹0.000000";
     }
 
     function toggleModal(show) {
@@ -184,20 +136,47 @@
 
     document.getElementById("boostAmount").addEventListener("input", updateBoostPreview);
 
-    function confirmBoost() {
-      const input = parseInt(document.getElementById("boostAmount").value);
-      if (isNaN(input) || input < 500) {
-        alert("Deposit must be ₹500 or more.");
-        return;
-      }
-
-      const profit = input * 4;
-      const addedSpeed = (profit / 200) * 10;
-      ghSpeed += addedSpeed; // ✅ Add to existing GH/s speed
-
-      toggleModal(false);
-      alert(`✅ Boost Activated!\n⚙️ +${addedSpeed.toFixed(2)} GH/s added!`);
+      async function initiatePayment() {
+    const amount = parseInt(document.getElementById("boostAmount").value);
+    if (isNaN(amount) || amount < 500) {
+      alert("Minimum deposit is ₹500");
+      return;
     }
-  </script>
+
+    const total = amount + amount * 0.10;
+
+    const response = await fetch("http://localhost:3000/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: total })
+    });
+
+    const data = await response.json();
+
+    if (!data.orderToken) {
+      alert("❌ Failed to initiate payment.");
+      return;
+    }
+
+    const cashfree = new Cashfree();
+    cashfree.initialiseDropin({
+      orderToken: data.orderToken,
+      container: "#dropin-container",
+      onSuccess: function () {
+        const profit = amount * 4;
+        const addedSpeed = (profit / 200) * 10;
+        ghSpeed += addedSpeed;
+        alert(`✅ Boost Activated!\n⚙️ +${addedSpeed.toFixed(2)} GH/s added!`);
+        document.getElementById("boostModal").classList.add("hidden");
+      },
+      onFailure: function () {
+        alert("❌ Payment failed.");
+      }
+    });
+
+    document.getElementById("dropin-container").classList.remove("hidden");
+  }
+</script>
+
 </body>
 </html>
